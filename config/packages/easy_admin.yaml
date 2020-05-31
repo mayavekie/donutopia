@@ -1,6 +1,49 @@
-#easy_admin:
-#    entities:
-#        # List the entity class name you want to manage
-#        - App\Entity\Product
-#        - App\Entity\Category
-#        - App\Entity\User
+easy_admin:
+    entities:
+        # Entities to manage in admin dashboard
+        Product:
+            class: App\Entity\Product
+        Category:
+            class: App\Entity\Category
+        User:
+            class: App\Entity\User
+        Price:
+            class: App\Entity\Price
+        Order:
+            class: App\Entity\Order
+        Images:
+            class: App\Entity\Images
+
+    site_name: "Donutopia Admin"
+
+    list:
+        actions:
+            - {name: 'show', icon: 'eye', label: ''}
+            - {name: 'edit', icon: 'pen', label: ''}
+            - {name: 'delete', icon: 'trash-alt', label: ''}
+            - {name: 'new', icon: 'plus-circle', label: ''}
+
+    design:
+#        assets:
+#            css:
+#                - '/css/admin.css'
+
+
+        menu:
+            - {label: "Home"}
+
+            - {label: "Shop"}
+            - {entity: Product, icon: "tag"}
+            - {entity: Category, icon: "layer-group"}
+            - {entity: Images, icon: "image"}
+
+            - {label: "Bestellingen"}
+            - {entity: Order, icon: "shopping-basket"}
+
+            - {label: "Gebruikers"}
+            - {entity: User, icon: "user"}
+
+
+
+
+

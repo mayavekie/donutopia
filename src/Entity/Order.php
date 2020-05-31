@@ -45,17 +45,17 @@ class Order
     private $updatedAt;
 
     /**
+     * @ORM\OneToMany(targetEntity=OrderDetails::class, mappedBy="bestelling")
+     * @Groups({"order:read", "order:write"})
+     */
+    private $orderDetails;
+
+    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"order:read"})
      */
     private $user;
-
-    /**
-     * @ORM\OneToMany(targetEntity=OrderDetails::class, mappedBy="bestelling")
-     * @Groups({"order:read", "order:write"})
-     */
-    private $orderDetails;
 
     public function __construct()
     {
@@ -93,18 +93,6 @@ class Order
     }
 
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection|orderDetails[]
      */
@@ -132,6 +120,18 @@ class Order
                 $orderDetail->setBestelling(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

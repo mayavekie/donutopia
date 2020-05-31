@@ -30,13 +30,13 @@ class Price
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "price:write"})
+     * @Groups({"price:read", "price:write", "product:read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "price:write"})
+     * @Groups({"price:read", "price:write", "product:read"})
      */
     private $tax;
 
@@ -55,7 +55,7 @@ class Price
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="price")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"price:read"})
+     *
      */
     private $product;
 
@@ -123,4 +123,10 @@ class Price
 
         return $this;
     }
+
+    public function __toString()
+    {
+
+            return (string)$this->getPrice();
+        }
 }

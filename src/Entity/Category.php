@@ -29,19 +29,19 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"category:read", "category:write"})
+     * @Groups({"category:read", "category:write", "product:read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"category:read", "category:write"})
+     * @Groups({"category:read", "category:write", "product:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"category:read", "category:write"})
+     * @Groups({"category:read", "category:write", "product:read"})
      */
     private $img;
 
@@ -57,7 +57,7 @@ class Category
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="category")
-     * @Groups({"category:read"})
+     *
      */
     private $product;
 
@@ -149,5 +149,11 @@ class Category
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getDescription();
     }
 }

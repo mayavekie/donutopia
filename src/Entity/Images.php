@@ -24,6 +24,7 @@ class Images
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"product:read"})
      */
     private $id;
 
@@ -63,8 +64,6 @@ class Images
         $this->title = $title;
     }
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -87,12 +86,6 @@ class Images
         return $this->title;
     }
 
-//    public function setTitle(string $title): self
-//    {
-//        $this->title = $title;
-//
-//        return $this;
-//    }
 
     public function getPath(): ?string
     {

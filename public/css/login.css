@@ -1,0 +1,40 @@
+body {
+    background-image: url("../images/background-login.jpg");
+    background-size: cover;
+}
+
+.log-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    background: #F0DDD5;
+    padding: 50px;
+    border: 3px solid #04C4D9 ;
+    border-radius: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+input {
+    padding: 7px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    width: 50%;
+    justify-content: center;
+
+}

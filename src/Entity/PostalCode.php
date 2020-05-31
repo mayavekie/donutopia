@@ -35,6 +35,16 @@ class PostalCode
     private $postalCode;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $up;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $structure;
+
+    /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="postalCode")
      */
     private $users;
@@ -69,6 +79,30 @@ class PostalCode
     public function setPostalCode(int $postalCode): self
     {
         $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getUp(): ?string
+    {
+        return $this->up;
+    }
+
+    public function setUp(string $up): self
+    {
+        $this->up = $up;
+
+        return $this;
+    }
+
+    public function getStructure(): ?string
+    {
+        return $this->structure;
+    }
+
+    public function setStructure(string $structure): self
+    {
+        $this->structure = $structure;
 
         return $this;
     }
