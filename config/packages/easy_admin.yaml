@@ -1,8 +1,27 @@
 easy_admin:
+    site_name: "<img src='images/logo.png' alt='logo' class='logo'> Donutopia Admin"
+    user:
+        display_name: true
+        name_property_path: "firstName"
     entities:
         # Entities to manage in admin dashboard
         Product:
             class: App\Entity\Product
+            label: "Product"
+            list:
+
+            form:
+              fields:
+                - {type: "group", icon: "pencil", label: "Basic Information", css_class: "col-lg-7"}
+                - name
+                - {property: "description", type: "text-editor"}
+                - {type: "group", label: "details", css_class: "col-lg-5"}
+                - category
+                - price
+                - images
+
+
+
         Category:
             class: App\Entity\Category
         User:
@@ -14,7 +33,6 @@ easy_admin:
         Images:
             class: App\Entity\Images
 
-    site_name: "Donutopia Admin"
 
     list:
         actions:
@@ -24,24 +42,32 @@ easy_admin:
             - {name: 'new', icon: 'plus-circle', label: ''}
 
     design:
-#        assets:
-#            css:
-#                - '/css/admin.css'
+        assets:
+            css:
+                - '/css/dashboard.css'
+            favicon: "/images/Donutopia2-kopie.png"
 
 
         menu:
             - {label: "Home"}
 
             - {label: "Shop"}
-            - {entity: Product, icon: "tag"}
-            - {entity: Category, icon: "layer-group"}
-            - {entity: Images, icon: "image"}
-
+            - label: "Producten"
+              icon: "tag"
+              children:
+                - {entity: Product, label: "Producten", icon: "list"}
+                - {entity: Product, label: "Toevoegen", params:{action: "new"}, icon: "plus"}
+            - label: "Categoriën"
+              icon: "layer-group"
+              children:
+                - {entity: Category, label: "Categoriën", icon: "list"}
+                - {entity: Category, label: "Toevoegen", icon: "plus"}
+            - label: Afbeeldingen
+            - {entity: Images, label: "Afbeeldingen", icon: "image"}
             - {label: "Bestellingen"}
-            - {entity: Order, icon: "shopping-basket"}
-
+            - {entity: Order, label: "Bestellingen", icon: "shopping-basket"}
             - {label: "Gebruikers"}
-            - {entity: User, icon: "user"}
+            - {entity: User, icon: "user", label: "Gebruikers"}
 
 
 
