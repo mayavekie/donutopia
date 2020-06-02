@@ -9,11 +9,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"={"price"}},
- *     itemOperations={
- *          "get"={"path"="/price/{id}"},
- *          "put"={"path"="/price/{id}"},
- *          "delete"={"path"="/price/{id}"}},
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"={"path"="/price/{id}"}},
  *     normalizationContext={"groups"={"price:read"}},
  *     denormalizationContext={"groups"={"price:write"}}
  * )

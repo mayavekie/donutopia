@@ -6,17 +6,17 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
- *     itemOperations={
- *          "get"={"path"="/image/{id}"},
- *          "delete"={"path"="/image/{id}"}},
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"={"path"="/image/{id}"}},
  *     normalizationContext={"groups"={"images:read"}},
  *     denormalizationContext={"groups"={"images:write"}}
  * )
  * @ORM\Entity(repositoryClass=ImagesRepository::class)
+ * @Vich\Uploadable()
  */
 class Images
 {
@@ -29,22 +29,9 @@ class Images
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"images:read", "images:write"})
+     * @Vich\UploadableField(mapping="products", fileNameProperty="image")
      */
-    private $fileName;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"images:read", "images:write"})
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"images:read", "images:write"})
-     */
-    private $path;
+    private $imageFile;
 
     /**
      * @ORM\Column(type="datetime")
@@ -58,10 +45,26 @@ class Images
      */
     private $product;
 
-    public function __construct(string $title=null)
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"images:read", "images:write", "products:read"})
+     */
+    private $imageAlt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+    public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->title = $title;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -69,35 +72,30 @@ class Images
         return $this->id;
     }
 
-    public function getFileName(): ?string
+
+    /**
+     * @return mixed
+     */
+    public function getImageFile()
     {
-        return $this->fileName;
+        return $this->imageFile;
     }
 
-    public function setFileName(string $fileName): self
+    /**
+     * @param mixed $imageFile
+     * @throws
+     */
+    public function setImageFile($imageFile): void
     {
-        $this->fileName = $fileName;
-
-        return $this;
+        $this->imageFile = $imageFile;
+        if ($imageFile){
+            $this->updatedAt= new \DateTimeImmutable();
+        }
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
-
-        return $this;
-    }
+    /**
+     * @Groups({"images:write", "images:read"})
+     */
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -116,4 +114,35 @@ class Images
 
         return $this;
     }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageAlt(): ?string
+    {
+        return $this->imageAlt;
+    }
+
+    public function setImageAlt(?string $imageAlt): self
+    {
+        $this->imageAlt = $imageAlt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+
 }

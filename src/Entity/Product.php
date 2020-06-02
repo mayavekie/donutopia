@@ -8,18 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"={"product"}},
- *     itemOperations={
- *              "get"={"path"="/product/{id}"},
- *              "put"={"path"="/product/{id}"},
- *              "delete"={"path"="/product/{id}"}},
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"={"path"="/product/{id}"}},
  *     normalizationContext={"groups"={"product:read"}},
  *     denormalizationContext={"groups"={"product:write"}}
  * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @Vich\Uploadable()
  */
 class Product
 {
@@ -58,7 +57,7 @@ class Product
     private $orderDetails;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"persist"})
      * @Groups({"product:read"})
      *
      */

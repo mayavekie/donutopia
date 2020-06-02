@@ -1,0 +1,11 @@
+body {
+    background: rgb(245,233,229);
+}
+
+.main-sidebar {
+    background: rgb(245,233,229);
+}
+
+body.show .content-body .form-horizontal {
+    background: white;
+}

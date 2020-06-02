@@ -8,15 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"={"path"="/category"}},
- *     itemOperations={"get"={"path"="/category/{id}"}, "put"={"path"="/category/{id}"}, "delete"={"path"="/category/{id}"}},
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"={"path"="/category/{id}"}},
  *     normalizationContext={"groups"={"category:read"}},
  *     denormalizationContext={"groups"={"category:write"}}
  * )
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @Vich\Uploadable()
  */
 class Category
 {
@@ -44,6 +46,10 @@ class Category
      * @Groups({"category:read", "category:write", "product:read"})
      */
     private $img;
+    /**
+     * @Vich\UploadableField(mapping="categories", fileNameProperty="img")
+     */
+    private $imgFile;
 
     /**
      * @ORM\Column(type="datetime")
@@ -102,11 +108,31 @@ class Category
         return $this->img;
     }
 
-    public function setImg(string $img): self
+    public function setImg(?string $img): self
     {
         $this->img = $img;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImgFile()
+    {
+        return $this->imgFile;
+    }
+
+    /**
+     * @param mixed $imgFile
+     * @throws
+     */
+    public function setImgFile($imgFile): void
+    {
+        $this->imgFile = $imgFile;
+        if ($imgFile){
+            $this->updatedAt= new \DateTimeImmutable();
+        }
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
