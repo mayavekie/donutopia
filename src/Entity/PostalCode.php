@@ -137,4 +137,12 @@ class PostalCode
 
         return $this;
     }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+
+        return $this->getPostalCode(). " " .$this->getCity();
+
+    }
 }

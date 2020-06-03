@@ -44,7 +44,7 @@ class OrderDetails
     private $tax;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderDetails")
+     * @ORM\ManyToOne(targetEntity=Orders::class, inversedBy="orderDetails")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"orderDet:read"})
      */
@@ -98,12 +98,12 @@ class OrderDetails
         return $this;
     }
 
-    public function getBestelling(): ?Order
+    public function getBestelling(): ?Orders
     {
         return $this->bestelling;
     }
 
-    public function setBestelling(?Order $bestelling): self
+    public function setBestelling(?Orders $bestelling): self
     {
         $this->bestelling = $bestelling;
 
@@ -121,4 +121,10 @@ class OrderDetails
 
         return $this;
     }
+
+//    public function __toString()
+//    {
+//        // TODO: Implement __toString() method.
+//        return (string) $this->getProduct(). " #". $this->getQuantity();
+//    }
 }

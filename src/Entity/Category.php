@@ -180,6 +180,6 @@ class Category
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->getDescription();
+        return $this->getName();
     }
 }

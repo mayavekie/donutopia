@@ -93,7 +93,7 @@ class User implements UserInterface
     private $postalCode;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Orders::class, mappedBy="user")
      * @Groups({"user:read"})
      */
     private $orders;
@@ -256,14 +256,14 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection|Orders[]
      */
     public function getOrders(): Collection
     {
         return $this->orders;
     }
 
-    public function addOrder(Order $order): self
+    public function addOrder(Orders $order): self
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
@@ -273,7 +273,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeOrder(Orders $order): self
     {
         if ($this->orders->contains($order)) {
             $this->orders->removeElement($order);
@@ -284,5 +284,11 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getFirstName();
     }
 }

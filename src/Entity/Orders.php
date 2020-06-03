@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  *
  */
-class Order
+class Orders
 {
     /**
      * @ORM\Id()

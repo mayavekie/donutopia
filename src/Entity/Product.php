@@ -83,6 +83,7 @@ class Product
         $this->category = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+
     }
 
     public function getId(): ?int
@@ -250,6 +251,6 @@ class Product
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->getDescription();
+        return $this->getName();
     }
 }

@@ -26,7 +26,7 @@ easy_admin:
         - label: Afbeeldingen
         - {entity: Images, label: "Afbeeldingen", icon: "image"}
         - {label: "Bestellingen"}
-        - {entity: Order, label: "Bestellingen", icon: "shopping-basket"}
+        - {entity: Orders, label: "Bestellingen", icon: "shopping-basket"}
         - {label: "Gebruikers"}
         - {entity: User, icon: "user", label: "Gebruikers"}
 
@@ -35,105 +35,135 @@ easy_admin:
         Product:
             class: App\Entity\Product
             label: "Product"
+            help: "Bekijk, wijzig, creëer en verwijder producten."
             show:
               fields:
 #                - {type: "group", icon: "pencil", label: "Informatie", css_class: "col-lg-7"}
-                - name
-                - {property: "description", type: "raw"}
-                - category
-                - price
-                - createdAt
-                - updatedAt
+                - {property: "name", label: "Naam"}
+                - {property: "description", type: "raw", label: "Omschrijving"}
+                - {property: "category", label: "Categorie"}
+#                - {property: "price", label: "Prijs"}
+                - {property: "createdAt", label: "Gecreëerd"}
+                - {property: "updatedAt", label: "Geüpdatet"}
 #                - {type: "group", label: "Afbeeldingen", css_class: "col-lg-5"}
-                - {property: "images", template: "images.html.twig", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false} }
+                - {property: "images", template: "images.html.twig", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
 
             form:
               fields:
                 - {type: "group", icon: "pencil", label: "Informatie", css_class: "col-lg-7"}
-                - name
-                - {property: "description", type: "text-editor"}
+                - {property: "name", label: "Naam"}
+                - {property: "description", type: "text-editor", label: "Omschrijving"}
                 - {type: "group", label: "Details", css_class: "col-lg-5"}
-                - category
-                - price
+                - {property: "category", label: "Categorie", type: "easyadmin_autocomplete"}
+                - {property: "price",  type: "collection", type_options: { entry_type: "App\Form\PriceType", by_reference: false }}
                 - {type: "group", label: "Upload afbeeldingen", css_class: "col-lg-5" }
-                - {property: "images", type: "collection", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false} }
+                - {property: "images", type: "collection", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
             list:
               fields:
                 - id
-                - name
-                - description
-                - images
-                - {property: "category", }
+                - {property: "name", label: "Naam"}
+                - {property: "description", type: "raw", label: "Omschrijving"}
+                - {property: "images", label: "Afbeeldingen"}
+                - {property: "category", label: "Categorie" }
 
 
 
         Category:
             class: App\Entity\Category
+            help: "Bekijk, wijzig, verwijder en creëer categoriën."
+
             list:
               fields:
                 - id
-                - name
-                - description
-                - {property: "img", type: "image", base_path: "%uploads_categories_path%"}
+                - {property: "name", label: "Naam"}
+                - {property: "description", type: "raw", label: "Omschrijving"}
+                - {property: "img", type: "image", base_path: "%uploads_categories_path%", label: "Afbeelding"}
 
             form:
               fields:
                 - {type: "group", label: "Informatie", css_class: "col-lg-7"}
-                - name
-                - {property: "description", type: "text-editor"}
+                - {property: "name", label: "Naam"}
+                - {property: "description", type: "text-editor", label: "Omschrijving"}
                 - {type: "group", label: "Upload afbeelding", css_class: "col-lg-5", icon: "clip"}
-                - {property: "imgFile", type: "vich_image"}
+                - {property: "imgFile", type: "vich_image", label: "Afbeelding"}
             show:
               fields:
 #                - {type: "group", label: "Informatie", css_class: "col-lg-7"}
-                - name
-                - {property: "description", type: "raw"}
-                - createdAt
-                - updatedAt
+                - {property: "name", label: "Naam"}
+                - {property: "description", type: "raw", label: "Omschrijving"}
+                - {property: "createdAt", label: "Gecreëerd"}
+                - {property: "updatedAt", label: "Geüpdatet"}
 #                - {type: "group", label: "Afbeelding", css_class: "col-lg-5"}
-                - {property: "img", type: "image", base_path: "%uploads_categories_path%"}
+                - {property: "img", type: "image", base_path: "%uploads_categories_path%", label: "Afbeelding"}
 
         Images:
           class: App\Entity\Images
+          help: "Bekijk en verwijder afbeeldingen."
+
           disabled_actions: ["edit"]
           list:
             fields:
               - id
-              - {property: "image", type: "image", base_path: "%uploads_products_path%"}
-              - imageAlt
+              - {property: "image", type: "image", base_path: "%uploads_products_path%", label: "Afbeelding"}
+              - {property: "imageAlt", label: "Titel "}
           show:
             fields:
               - {property: "imageAlt", label: "Name"}
-              - {property: "image", type: "image", base_path: "%uploads_products_path%"}
-              - {property: "product"}
+              - {property: "image", type: "image", base_path: "%uploads_products_path%", label: "Afbeelding"}
+              - {property: "product", label: "Product"}
 
 
 
-        Order:
-          class: App\Entity\Order
-          disabled_actions: ["new", "edit"]
+        Orders:
+          class: App\Entity\Orders
+          help: "Bekijk en verwijder bestellingen."
+          disabled_actions: ["new","edit"]
+          list:
+            fields:
+              - id
+              - {property: "date", label: "Geplaatst"}
+              - {property: "orderDetails", label: "Details"}
+              - {property: "user", label: "Gebruiker"}
+
+          form:
+            fields:
+              - {property: "user", label: "Gebruiker"}
+              - {property: "date", label: "Geplaatst"}
+              - {property: "orderDetails", label: "Details"}
+
+
 
         User:
             class: App\Entity\User
-            disabled_actions: ["new", "edit"]
+            help: "Bekijk en verwijder gebruikers."
             list:
               fields:
                 - id
-                - firstName
-                - lastname
-                - email
-                - phone
-                - roles
+                - {property: "firstName", label: "Voornaam"}
+                - {property: "lastname", label: "Achternaam"}
+                - {property: "email", label: "Email", type: "email"}
+                - {property: "phone", label: "Telefoon", type: "tel"}
+                - {property: "roles", label: "Rol"}
             show:
               fields:
-                - firstname
-                - lastname
-                - email
-                - phone
-                - address
-                - {property: "postalCode", type_options: {disabled: true}}
-                - createdAt
-                - updatedAt
+                - {property: "firstName", label: "Voornaam"}
+                - {property: "lastname", label: "Achternaam"}
+                - {property: "email", label: "Email", type: "email"}
+                - {property: "phone", label: "Telefoon", type: "tel"}
+                - {property: "address", label: "Adres"}
+                - {property: "postalCode", type_options: {disabled: true}, label: "Stad"}
+                - {property: "createdAt", label: "Gecreëerd"}
+                - {property: "updatedAt", label: "Geüpdatet"}
+            form:
+              fields:
+                - {property: "firstName", label: "Voornaam"}
+                - {property: "lastname", label: "Achternaam"}
+                - {property: "email", label: "Email", type: "email"}
+                - {property: "phone", label: "Telefoon", type: "tel"}
+                - {property: "address", label: "Adres"}
+                - {property: "postalCode", label: "Stad"}
+
+
 
 
 
