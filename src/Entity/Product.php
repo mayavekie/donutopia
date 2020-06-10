@@ -68,7 +68,7 @@ class Product
      * @ORM\OneToMany(targetEntity=Price::class, mappedBy="product", cascade={"persist"})
      * @Groups({"product:read", "product:write"})
      */
-    private $price;
+    public $price;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="product", cascade={"persist"})

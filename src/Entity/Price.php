@@ -51,7 +51,7 @@ class Price
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="price")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      * @Groups({"price:read"})
      */
     private $product;
