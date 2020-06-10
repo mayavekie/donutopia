@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"},
+ *     collectionOperations={"get", "post"},
  *     itemOperations={"get"={"path"="/product/{id}"}},
  *     normalizationContext={"groups"={"product:read"}},
  *     denormalizationContext={"groups"={"product:write"}}
@@ -26,6 +26,7 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"product:read"})
      */
     private $id;
 
@@ -64,8 +65,8 @@ class Product
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Price::class, mappedBy="product")
-     * @Groups({"product:read"})
+     * @ORM\OneToMany(targetEntity=Price::class, mappedBy="product", cascade={"persist"}, orphanRemoval=false)
+     * @Groups({"product:read", "product:write"})
      */
     private $price;
 
@@ -202,6 +203,14 @@ class Product
     public function addPrice(Price $price): self
     {
         if (!$this->price->contains($price)) {
+            if (!$price->getStartDate()){
+                $price->setStartDate(new \DateTimeImmutable());
+            }
+            if (!$price->getEndDate()){
+                $price->setEndDate(new \DateTimeImmutable("2025-01-01"));
+            }
+
+
             $this->price[] = $price;
             $price->setProduct($this);
         }

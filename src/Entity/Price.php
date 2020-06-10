@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"},
+ *     collectionOperations={"get", "post"},
  *     itemOperations={"get"={"path"="/price/{id}"}},
  *     normalizationContext={"groups"={"price:read"}},
  *     denormalizationContext={"groups"={"price:write"}}
@@ -27,25 +27,25 @@ class Price
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "price:write", "product:read"})
+     * @Groups({"price:read", "price:write", "product:read", "product:write"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "price:write", "product:read"})
+     * @Groups({"price:read", "price:write", "product:read", "product:write"})
      */
     private $tax;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"price:read", "price:write"})
+     * @Groups({"price:read", "price:write", "product:read", "product:write"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"price:read", "price:write"})
+     * @Groups({"price:read", "price:write", "product:read", "product:write"})
      */
     private $endDate;
 
@@ -55,6 +55,13 @@ class Price
      *
      */
     private $product;
+
+    public function __construct()
+    {
+        $this->startDate= new \DateTimeImmutable();
+        $this->endDate = new \DateTimeImmutable("2025-01-01");
+        $this->tax = 21;
+    }
 
     public function getId(): ?int
     {
@@ -109,7 +116,7 @@ class Price
         return $this;
     }
 
-    public function getProduct(): ?Product
+    public function getProducts(): ?Product
     {
         return $this->product;
     }
@@ -121,9 +128,9 @@ class Price
         return $this;
     }
 
-    public function __toString()
-    {
-
-            return (string)$this->getPrice();
-        }
+//    public function __toString()
+//    {
+//
+//            return (string)$this->getPrice();
+//        }
 }

@@ -42,7 +42,7 @@ easy_admin:
                 - {property: "name", label: "Naam"}
                 - {property: "description", type: "raw", label: "Omschrijving"}
                 - {property: "category", label: "Categorie"}
-#                - {property: "price", label: "Prijs"}
+                - {property: "price",  type: "collection", type_options: { entry_type: 'App\Form\PriceType', by_reference: false }}
                 - {property: "createdAt", label: "Gecreëerd"}
                 - {property: "updatedAt", label: "Geüpdatet"}
 #                - {type: "group", label: "Afbeeldingen", css_class: "col-lg-5"}
@@ -50,12 +50,12 @@ easy_admin:
 
             form:
               fields:
-                - {type: "group", icon: "pencil", label: "Informatie", css_class: "col-lg-7"}
+                - {type: "group", label: "Informatie", css_class: "col-lg-7"}
                 - {property: "name", label: "Naam"}
                 - {property: "description", type: "text-editor", label: "Omschrijving"}
                 - {type: "group", label: "Details", css_class: "col-lg-5"}
                 - {property: "category", label: "Categorie", type: "easyadmin_autocomplete"}
-                - {property: "price",  type: "collection", type_options: { entry_type: "App\Form\PriceType", by_reference: false }}
+                - {property: "price",  type: "collection", type_options: { entry_type: 'App\Form\PriceType', by_reference: false }, label: "Pris"}
                 - {type: "group", label: "Upload afbeeldingen", css_class: "col-lg-5" }
                 - {property: "images", type: "collection", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
             list:
@@ -78,6 +78,7 @@ easy_admin:
                 - {property: "name", label: "Naam"}
                 - {property: "description", type: "raw", label: "Omschrijving"}
                 - {property: "img", type: "image", base_path: "%uploads_categories_path%", label: "Afbeelding"}
+                - {property: "product", label: "Producten"}
 
             form:
               fields:

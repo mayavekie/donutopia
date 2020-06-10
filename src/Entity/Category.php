@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"},
+ *     collectionOperations={"get", "post"},
  *     itemOperations={"get"={"path"="/category/{id}"}},
  *     normalizationContext={"groups"={"category:read"}},
  *     denormalizationContext={"groups"={"category:write"}}
@@ -31,19 +31,19 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"category:read", "category:write", "product:read"})
+     * @Groups({"category:read", "category:write", "product:read", "product:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"category:read", "category:write", "product:read"})
+     * @Groups({"category:read", "category:write", "product:read", "product:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"category:read", "category:write", "product:read"})
+     * @Groups({"category:read", "category:write", "product:read", "product:write"})
      */
     private $img;
     /**
