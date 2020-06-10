@@ -59,20 +59,20 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"persist"})
-     * @Groups({"product:read"})
+     * @Groups({"product:read", "product:write"})
      *
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Price::class, mappedBy="product", cascade={"persist"}, orphanRemoval=false)
+     * @ORM\OneToMany(targetEntity=Price::class, mappedBy="product", cascade={"persist"})
      * @Groups({"product:read", "product:write"})
      */
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="product")
-     * @Groups({"product:read"})
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="product", cascade={"persist"})
+     * @Groups({"product:read", "product:write"})
      */
     private $category;
 
@@ -203,14 +203,6 @@ class Product
     public function addPrice(Price $price): self
     {
         if (!$this->price->contains($price)) {
-            if (!$price->getStartDate()){
-                $price->setStartDate(new \DateTimeImmutable());
-            }
-            if (!$price->getEndDate()){
-                $price->setEndDate(new \DateTimeImmutable("2025-01-01"));
-            }
-
-
             $this->price[] = $price;
             $price->setProduct($this);
         }

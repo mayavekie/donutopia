@@ -47,13 +47,13 @@ class Images
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:read"})
+     * @Groups({"product:read", "product:write"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"images:read", "images:write", "product:read"})
+     * @Groups({"images:read", "images:write", "product:read", "product:write"})
      */
     private $imageAlt;
 

@@ -27,7 +27,7 @@ class Price
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "price:write", "product:read", "product:write"})
+     * @Groups({"product:read", "product:write", "price:read", "price:write"})
      */
     private $price;
 
@@ -51,17 +51,17 @@ class Price
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="price")
-     * @ORM\JoinColumn(nullable=false)
-     *
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"price:read"})
      */
     private $product;
 
-    public function __construct()
-    {
-        $this->startDate= new \DateTimeImmutable();
-        $this->endDate = new \DateTimeImmutable("2025-01-01");
-        $this->tax = 21;
-    }
+//    public function __construct()
+//    {
+//        $this->startDate= new \DateTimeImmutable();
+//        $this->endDate = new \DateTimeImmutable("2025-01-01");
+//        $this->tax = 21;
+//    }
 
     public function getId(): ?int
     {
@@ -116,7 +116,7 @@ class Price
         return $this;
     }
 
-    public function getProducts(): ?Product
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
