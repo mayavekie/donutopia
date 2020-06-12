@@ -27,21 +27,21 @@ class OrderDetails
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"orderDet:read", "orderDet:write"})
+     * @Groups({"orderDet:read", "orderDet:write", "order:read", "order:write"})
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"orderDet:read"})
+     * @Groups({"orderDet:read", "orderDet:write", "order:read", "order:write"})
      */
     private $priceProduct;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"orderDet:read"})
+     * @Groups({"orderDet:read", "order:read"})
      */
-    private $tax;
+    private $tax=21;
 
     /**
      * @ORM\ManyToOne(targetEntity=Orders::class, inversedBy="orderDetails")
@@ -53,7 +53,7 @@ class OrderDetails
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderDetails")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"orderDet:read"})
+     * @Groups({"orderDet:read", "order:read"})
      */
     private $product;
 

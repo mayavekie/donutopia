@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
+ *     collectionOperations={"get"},
  *     itemOperations={"get"={"path"="/price/{id}"}},
  *     normalizationContext={"groups"={"price:read"}},
  *     denormalizationContext={"groups"={"price:write"}}
@@ -27,32 +27,32 @@ class Price
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"product:read", "product:write", "price:read", "price:write"})
+     * @Groups({"product:read", "product:write", "price:read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "price:write", "product:read", "product:write"})
+     * @Groups({"price:read", "product:read", "product:write"})
      */
     private $tax;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"price:read", "price:write", "product:read", "product:write"})
+     * @Groups({"price:read",  "product:read", "product:write"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"price:read", "price:write", "product:read", "product:write"})
+     * @Groups({"price:read", "product:read", "product:write"})
      */
     private $endDate;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="price")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"price:read"})
+     * @Groups({"price:read", "product:read", "product:write"})
      */
     private $product;
 
@@ -128,9 +128,8 @@ class Price
         return $this;
     }
 
-//    public function __toString()
-//    {
-//
-//            return (string)$this->getPrice();
-//        }
+    public function __toString()
+    {
+            return (string)"Prijs: €". $this->getPrice() . " , Btw: " . $this->getTax()  ."%" ;
+        }
 }

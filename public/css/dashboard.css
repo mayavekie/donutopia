@@ -1,11 +1,89 @@
+/*CSS Bij Donutopia- Admin Dashboard - back-end*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+/*Basis stijlen*/
 body {
     background: rgb(245,233,229);
+    font: 100%/1.4 Lato, Arial, sans-serif;
+    font-size: .9rem;
+    padding-top: 80px;
+}
+
+.main-header {
+    padding-bottom: 20px;
+}
+
+/*Overzicht stijlen */
+.main-header #header-logo img, .main-header #header-logo svg {
+    width: 10%;
 }
 
 .main-sidebar {
     background: rgb(245,233,229);
 }
 
-body.show .content-body .form-horizontal {
-    background: white;
+
+.main-header #header-logo a,
+.navbar-custom-menu .user,
+.sidebar-menu .fa,
+.fa-arrow-down:before,
+.fa-sort:before,
+.fa-eye:before,
+.fa-pen:before
+{
+    color: #04C4D9;
 }
+
+.fa-trash-alt:before,
+.text-danger {
+    color: #EB9BC8;
+}
+#main .table  thead
+{
+    background: rgb(245,233,229);
+
+}
+
+.sidebar-menu li:not(.submenu-active).active .fa,
+.sidebar-menu li:not(.submenu-active).active a,
+#easyadmin-add-collection-item-product_images,
+.btn-link{
+    color: #04C4D9;
+}
+
+.global-actions .btn,
+.btn-primary{
+    background:  #04C4D9;
+}
+
+
+fieldset, body.show .form-horizontal{
+    background: rgb(245,233,229);
+}
+
+.content-body .form-horizontal, .content-body form,
+.badge-secondary {
+    background: none;
+}
+
+.form-group .col-form-label.required:after, .form-group label.required:after {
+    color: #EB9BC8;
+}
+
+input[type=checkbox] {
+    background: pink;
+}
+
+.form-widget .inline li a, .form-widget .form-control a,
+.email a, .tel a{
+    color: #04C4D9;
+}
+
+
+
+
+
+
+
+

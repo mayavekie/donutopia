@@ -12,10 +12,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
+ *     collectionOperations={"get"},
  *     itemOperations={"get"={"path"="/product/{id}"}},
  *     normalizationContext={"groups"={"product:read"}},
- *     denormalizationContext={"groups"={"product:write"}}
  * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @Vich\Uploadable()
@@ -26,19 +25,19 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"product:read"})
+     * @Groups({"product:read", "order:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:read", "product:write"})
+     * @Groups({"product:read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"product:read", "product:write"})
+     * @Groups({"product:read"})
      */
     private $description;
 
@@ -59,20 +58,20 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"persist"})
-     * @Groups({"product:read", "product:write"})
+     * @Groups({"product:read"})
      *
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity=Price::class, mappedBy="product", cascade={"persist"})
-     * @Groups({"product:read", "product:write"})
+     * @Groups({"product:read", "price:read", "price:write"})
      */
     public $price;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="product", cascade={"persist"})
-     * @Groups({"product:read", "product:write"})
+     * @Groups({"product:read"})
      */
     private $category;
 

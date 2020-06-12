@@ -1,9 +1,19 @@
 easy_admin:
-    site_name: " Donutopia Admin"
-#  <img src='/images/logo.png' alt='logo' class='logo'>
+    site_name: " <img src='/images/logo.png' alt='logo' class='logo'>  Donutopia Admin"
     user:
         display_name: true
         name_property_path: "firstName"
+    formats:
+      date:     'd/m/Y'
+      time:     'H:i'
+      datetime: 'd/m/Y H:i:s'
+
+    list:
+      actions:
+        - {name: 'show', icon: 'eye', label: ''}
+        - {name: 'edit', icon: 'pen', label: ''}
+        - {name: 'delete', icon: 'trash-alt', label: ''}
+        - {name: 'new', icon: 'plus-circle', label: ''}
 
     design:
       assets:
@@ -17,7 +27,12 @@ easy_admin:
           icon: "tag"
           children:
             - {entity: Product, label: "Producten", icon: "list"}
-            - {entity: Product, label: "Toevoegen", params:{action: "new"}, icon: "plus"}
+            - {entity: Product, label: "Product toevoegen", params:{action: "new"}, icon: "plus"}
+        - label: "Prijzen"
+          icon: "euro"
+          children:
+            - {entity: Price, label: "Prijzen", icon: "list"}
+            - {entity: Price, label: "Prijs toevoegen", icon: "plus", params:{action: "new"}}
         - label: "Categoriën"
           icon: "layer-group"
           children:
@@ -34,28 +49,32 @@ easy_admin:
         # Entities to manage in admin dashboard
         Product:
             class: App\Entity\Product
-            label: "Product"
+            label: "Producten"
             help: "Bekijk, wijzig, creëer en verwijder producten."
             show:
+              help:
               fields:
 #                - {type: "group", icon: "pencil", label: "Informatie", css_class: "col-lg-7"}
                 - {property: "name", label: "Naam"}
                 - {property: "description", type: "raw", label: "Omschrijving"}
                 - {property: "category", label: "Categorie"}
-                - {property: "price",  type: "collection", type_options: { entry_type: 'App\Form\PriceType', by_reference: false }}
+                - {property: "price",  label: "Prijs"}
                 - {property: "createdAt", label: "Gecreëerd"}
                 - {property: "updatedAt", label: "Geüpdatet"}
 #                - {type: "group", label: "Afbeeldingen", css_class: "col-lg-5"}
                 - {property: "images", template: "images.html.twig", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
 
             form:
+              title: "Product toevoegen"
+              help:
               fields:
                 - {type: "group", label: "Informatie", css_class: "col-lg-7"}
                 - {property: "name", label: "Naam"}
                 - {property: "description", type: "text-editor", label: "Omschrijving"}
                 - {type: "group", label: "Details", css_class: "col-lg-5"}
                 - {property: "category", label: "Categorie", type: "easyadmin_autocomplete"}
-                - {property: "price",  type: "collection", type_options: { entry_type: 'App\Form\PriceType', by_reference: false }, label: "Pris"}
+#                - {property: "price",  type: "collection", type_options: { entry_type: 'App\Form\PriceType', by_reference: false }, label: "Pris"}
+                - {property: "price",  label: "Prijs"}
                 - {type: "group", label: "Upload afbeeldingen", css_class: "col-lg-5" }
                 - {property: "images", type: "collection", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
             list:
@@ -70,6 +89,7 @@ easy_admin:
 
         Category:
             class: App\Entity\Category
+            label: "Categoriën"
             help: "Bekijk, wijzig, verwijder en creëer categoriën."
 
             list:
@@ -81,6 +101,9 @@ easy_admin:
                 - {property: "product", label: "Producten"}
 
             form:
+              title: "Categorie toevoegen"
+              help:
+
               fields:
                 - {type: "group", label: "Informatie", css_class: "col-lg-7"}
                 - {property: "name", label: "Naam"}
@@ -88,6 +111,7 @@ easy_admin:
                 - {type: "group", label: "Upload afbeelding", css_class: "col-lg-5", icon: "clip"}
                 - {property: "imgFile", type: "vich_image", label: "Afbeelding"}
             show:
+              help:
               fields:
 #                - {type: "group", label: "Informatie", css_class: "col-lg-7"}
                 - {property: "name", label: "Naam"}
@@ -99,6 +123,8 @@ easy_admin:
 
         Images:
           class: App\Entity\Images
+          label: "Afbeeldingen"
+
           help: "Bekijk en verwijder afbeeldingen."
 
           disabled_actions: ["edit"]
@@ -108,6 +134,7 @@ easy_admin:
               - {property: "image", type: "image", base_path: "%uploads_products_path%", label: "Afbeelding"}
               - {property: "imageAlt", label: "Titel "}
           show:
+            help:
             fields:
               - {property: "imageAlt", label: "Name"}
               - {property: "image", type: "image", base_path: "%uploads_products_path%", label: "Afbeelding"}
@@ -117,6 +144,8 @@ easy_admin:
 
         Orders:
           class: App\Entity\Orders
+          label: "Bestellingen"
+
           help: "Bekijk en verwijder bestellingen."
           disabled_actions: ["new","edit"]
           list:
@@ -126,16 +155,11 @@ easy_admin:
               - {property: "orderDetails", label: "Details"}
               - {property: "user", label: "Gebruiker"}
 
-          form:
-            fields:
-              - {property: "user", label: "Gebruiker"}
-              - {property: "date", label: "Geplaatst"}
-              - {property: "orderDetails", label: "Details"}
-
-
 
         User:
             class: App\Entity\User
+            label: "Gebruikers"
+
             help: "Bekijk en verwijder gebruikers."
             list:
               fields:
@@ -146,6 +170,7 @@ easy_admin:
                 - {property: "phone", label: "Telefoon", type: "tel"}
                 - {property: "roles", label: "Rol"}
             show:
+              help:
               fields:
                 - {property: "firstName", label: "Voornaam"}
                 - {property: "lastname", label: "Achternaam"}
@@ -155,26 +180,38 @@ easy_admin:
                 - {property: "postalCode", type_options: {disabled: true}, label: "Stad"}
                 - {property: "createdAt", label: "Gecreëerd"}
                 - {property: "updatedAt", label: "Geüpdatet"}
-            form:
-              fields:
-                - {property: "firstName", label: "Voornaam"}
-                - {property: "lastname", label: "Achternaam"}
-                - {property: "email", label: "Email", type: "email"}
-                - {property: "phone", label: "Telefoon", type: "tel"}
-                - {property: "address", label: "Adres"}
-                - {property: "postalCode", label: "Stad"}
+        Price:
+          class: App\Entity\Price
+          label: "Prijzen"
+          help: "Bekijk en voeg prijzen toe"
+          list:
+            fields:
+              - id
+              - {property: "price", label: "Prijs"}
+              - {property: "tax", label: "Btw"}
+              - {property: "startDate", label: "Begin datum"}
+              - {property: "endDate", label: "Eind datum"}
+              - {property: "product", label: "Product"}
+          show:
+            help:
+            fields:
+              - {property: "price", label: "Prijs"}
+              - {property: "tax", label: "Btw"}
+              - {property: "startDate", label: "Begin datum"}
+              - {property: "endDate", label: "Eind datum"}
+              - {property: "product", label: "Product"}
+          form:
+            title: "Prijs toevoegen"
+            help:
+
+            fields:
+              - {property: "price", label: "Prijs"}
+              - {property: "tax", label: "Btw"}
+              - {property: "startDate", label: "Begin datum"}
+              - {property: "endDate", label: "Eind datum"}
+              - {property: "product", label: "Product"}
 
 
-
-
-
-
-    list:
-        actions:
-            - {name: 'show', icon: 'eye', label: ''}
-            - {name: 'edit', icon: 'pen', label: ''}
-            - {name: 'delete', icon: 'trash-alt', label: ''}
-            - {name: 'new', icon: 'plus-circle', label: ''}
 
 
 

@@ -1,6 +1,15 @@
+/*CSS voor Donutopia - Login - Back-end*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+
 body {
     background-image: url("../images/background-login.jpg");
     background-size: cover;
+    height: 100vh;
+    font: 100%/1.4 Lato, Arial, sans-serif;
+    font-size: 1rem;
+    color: #04C4D9;
 }
 
 .log-container {
@@ -30,11 +39,37 @@ input {
     border-radius: 20px;
     margin-bottom: 10px;
     margin-top: 10px;
+    border: 2px solid #EB9BC8;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline-width: 0;
 }
 
 button {
+    margin: 20px 60px;
+    padding: 7px;
+    border-radius: 20px;
+    margin-bottom: 10px;
     margin-top: 10px;
-    width: 50%;
-    justify-content: center;
+    background: #EB9BC8;
+    border: none ;
+    color: white;
+    font: 100%/1.4 Lato, Arial, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
 
+}
+
+button:hover, button:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em  #04C4D9;
+    transform: translateY(-0.25em);
+    outline-width: 0;
+
+}
+
+label {
+    color: white;
+    padding-left: 10px;
 }
