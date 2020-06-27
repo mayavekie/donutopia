@@ -2,17 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PostalCodeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
  *     collectionOperations={"get"={"path"="/postal-codes"}},
- *     itemOperations={"get"={"path"="/postal-code/{id}"}}
+ *     itemOperations={"get"={"path"="/postal-code/{id}"}},
+ *     attributes={"pagination_enabled"=false}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"postalCode": "partial", "city": "partial"})
  * @ORM\Entity(repositoryClass=PostalCodeRepository::class)
  */
 class PostalCode
@@ -21,16 +26,19 @@ class PostalCode
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("user:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("user:read")
      */
     private $city;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("user:read")
      */
     private $postalCode;
 

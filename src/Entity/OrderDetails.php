@@ -27,19 +27,19 @@ class OrderDetails
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"orderDet:read", "orderDet:write", "order:read", "order:write"})
+     * @Groups({"order:read", "order:write"})
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"orderDet:read", "orderDet:write", "order:read", "order:write"})
+     * @Groups({"order:read", "order:write"})
      */
     private $priceProduct;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"orderDet:read", "order:read"})
+     * @Groups({"order:read"})
      */
     private $tax=21;
 

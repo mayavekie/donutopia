@@ -25,7 +25,7 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"product:read", "order:read"})
+     * @Groups({"product:read", "order:read", "category:read"})
      */
     private $id;
 
@@ -57,8 +57,9 @@ class Product
     private $orderDetails;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"remove"})
      * @Groups({"product:read"})
+     *
      *
      */
     private $images;

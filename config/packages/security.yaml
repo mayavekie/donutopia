@@ -28,7 +28,7 @@ security:
                 # where to redirect after logout
                 # target: app_any_route
 #        api:
-#            pattern:   ^/api
+#            pattern:   ^/api/user/
 #            stateless: true
 #            guard:
 #                authenticators:

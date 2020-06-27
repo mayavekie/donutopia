@@ -3,8 +3,24 @@
 use App\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Dotenv\Dotenv;
 
 require dirname(__DIR__).'/config/bootstrap.php';
+//require 'system/config/bootstrap.php';
+
+// The check is to ensure we don't use .env in production
+if (!isset($_SERVER['APP_ENV'])) {
+    if (!class_exists(Dotenv::class)) {
+        throw new \RuntimeException('APP_ENV environment variable is not defined. You need to define environment variables for configuration or add "symfony/dotenv" as a Composer dependency to load variables from a .env file.');
+    }
+    //for local development
+    (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env.local');
+
+    //for deployment system 3
+//    (new Dotenv())->load(__DIR__.'/system/.env.local');
+
+}
+
 
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);

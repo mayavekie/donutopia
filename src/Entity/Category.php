@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
+ *     collectionOperations={"get"},
  *     itemOperations={"get"={"path"="/category/{id}"}},
  *     normalizationContext={"groups"={"category:read"}},
  *     denormalizationContext={"groups"={"category:write"}}
@@ -63,6 +63,7 @@ class Category
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="category")
+     * @Groups("category:read")
      *
      */
     private $product;
