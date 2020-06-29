@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
@@ -18,6 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *     denormalizationContext={"groups"={"category:write"}}
  * )
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"id":"exact"})
  * @Vich\Uploadable()
  */
 class Category
@@ -26,6 +29,7 @@ class Category
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("product:read")
      */
     private $id;
 
@@ -72,7 +76,6 @@ class Category
     {
         $this->product = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -99,6 +102,7 @@ class Category
 
     public function setDescription(string $description): self
     {
+
         $this->description = $description;
 
         return $this;

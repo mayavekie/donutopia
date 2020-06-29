@@ -3,8 +3,8 @@ vich_uploader:
 
     mappings:
         products:
-            uri_prefix: "%uploads_products_path%"
+            uri_prefix: "https://wdev.be/wdev_maya/eindwerk/images/products"
             upload_destination: '%kernel.project_dir%/../images/products'
         categories:
-            uri_prefix: "%uploads_categories_path%"
+            uri_prefix: "https://wdev.be/wdev_maya/eindwerk/images/categories"
             upload_destination: '%kernel.project_dir%/../images/categories'

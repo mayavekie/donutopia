@@ -4,13 +4,18 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    uploads_products_path: https://wdev.be/wdev_maya/eindwerk/images/products
-    uploads_categories_path: https://wdev.be/wdev_maya/eindwerk/images/categories
+    uploads_products_path: "images/products"
+    uploads_categories_path: "images/categories"
     cache_adapter: cache.adapter.filesystem
     locale: 'en'
 
 
 services:
+    acme_api.event.jwt_created_listener:
+        class: App\EventListener\JWTCreatedListener
+        arguments: ['@request_stack']
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
     # default configuration for services in *this* file
     _defaults:
@@ -29,11 +34,7 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    acme_api.event.jwt_created_listener:
-        class: App\EventListener\JWTCreatedListener
-        arguments: ['@request_stack']
-        tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 #    acme_api.event.jwt_created_listener:

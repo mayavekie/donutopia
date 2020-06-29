@@ -56,12 +56,12 @@ class Price
      */
     private $product;
 
-//    public function __construct()
-//    {
-//        $this->startDate= new \DateTimeImmutable();
-//        $this->endDate = new \DateTimeImmutable("2025-01-01");
-//        $this->tax = 21;
-//    }
+    public function __construct()
+    {
+        $this->startDate= new \DateTimeImmutable();
+        $this->endDate = new \DateTimeImmutable("2025-01-01");
+        $this->tax = 21;
+    }
 
     public function getId(): ?int
     {

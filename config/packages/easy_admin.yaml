@@ -126,7 +126,7 @@ easy_admin:
 
           help: "Bekijk en verwijder afbeeldingen."
 
-          disabled_actions: ["edit", "new", "delete"]
+          disabled_actions: ["edit", "new"]
           list:
             fields:
               - id

@@ -41,21 +41,28 @@ class OrderDetails
      * @ORM\Column(type="integer")
      * @Groups({"order:read"})
      */
-    private $tax=21;
+    private $tax;
 
     /**
      * @ORM\ManyToOne(targetEntity=Orders::class, inversedBy="orderDetails")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"orderDet:read"})
+     * @Groups({"orderDet:read", "order:write", "order:read"})
      */
     private $bestelling;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderDetails")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"orderDet:read", "order:read"})
+     * @Groups({"orderDet:read", "order:read", "order:write"})
      */
     private $product;
+
+    public function __construct()
+    {
+        $this->tax = 21;
+    }
+
+
 
     public function getId(): ?int
     {

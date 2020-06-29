@@ -46,7 +46,7 @@ class Orders
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderDetails::class, mappedBy="bestelling")
+     * @ORM\OneToMany(targetEntity=OrderDetails::class, mappedBy="bestelling", cascade={"persist"})
      * @Groups({"order:read", "order:write"})
      */
     private $orderDetails;
@@ -54,7 +54,7 @@ class Orders
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"order:read"})
+     * @Groups({"order:read", "order:write"})
      */
     private $user;
 
@@ -63,6 +63,7 @@ class Orders
         $this->orderDetails = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->date = new \DateTime();
     }
 
     public function getId(): ?int

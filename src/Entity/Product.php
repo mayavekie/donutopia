@@ -57,7 +57,7 @@ class Product
     private $orderDetails;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", cascade={"persist"})
      * @Groups({"product:read"})
      *
      *
