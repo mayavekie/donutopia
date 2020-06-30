@@ -8,12 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"={"order-details"}, "post"={"order-details"}},
- *     itemOperations={"get"={"path"="/order-details/{id}"}, "put"={"path"="/order-details/{id}"}},
- *     normalizationContext={"groups"={"orderDet:read"}},
- *     denormalizationContext={"groups"={"orderDet:write"}}
- * )
  * @ORM\Entity(repositoryClass=OrderDetailsRepository::class)
  */
 class OrderDetails
@@ -46,14 +40,14 @@ class OrderDetails
     /**
      * @ORM\ManyToOne(targetEntity=Orders::class, inversedBy="orderDetails")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"orderDet:read", "order:write", "order:read"})
+     * @Groups({"order:write", "order:read"})
      */
     private $bestelling;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderDetails")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"orderDet:read", "order:read", "order:write"})
+     * @Groups({"order:read", "order:write"})
      */
     private $product;
 
@@ -105,6 +99,11 @@ class OrderDetails
         return $this;
     }
 
+    public function getPriceTax(): ?float {
+        $btw = $this->priceProduct * ($this->tax / 100);
+        return $this->priceProduct + $btw;
+    }
+
     public function getBestelling(): ?Orders
     {
         return $this->bestelling;
@@ -129,9 +128,9 @@ class OrderDetails
         return $this;
     }
 
-//    public function __toString()
-//    {
-//        // TODO: Implement __toString() method.
-//        return (string) $this->getProduct(). " #". $this->getQuantity();
-//    }
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return (string) $this->getProduct(). ", Prijs per product incl. btw: €" . $this->getPriceTax() . ", Aantal: ". $this->getQuantity() ."x" ;
+    }
 }

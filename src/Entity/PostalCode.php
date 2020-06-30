@@ -12,12 +12,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"={"path"="/postal-codes"}},
- *     itemOperations={"get"={"path"="/postal-code/{id}"}},
- *     attributes={"pagination_enabled"=false}
- * )
- * @ApiFilter(SearchFilter::class, properties={"postalCode": "partial", "city": "partial"})
  * @ORM\Entity(repositoryClass=PostalCodeRepository::class)
  */
 class PostalCode

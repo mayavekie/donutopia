@@ -1,5 +1,5 @@
 easy_admin:
-    site_name: " <img src='./images/logo.png' alt='logo' class='logo'>  Donutopia Admin"
+    site_name: "Donutopia Admin"
     user:
         display_name: true
         name_property_path: "firstName"
@@ -58,8 +58,6 @@ easy_admin:
                 - {property: "description", type: "raw", label: "Omschrijving"}
                 - {property: "category", label: "Categorie"}
                 - {property: "price",  label: "Prijs"}
-                - {property: "createdAt", label: "Gecreëerd"}
-                - {property: "updatedAt", label: "Geüpdatet"}
 #                - {type: "group", label: "Afbeeldingen", css_class: "col-lg-5"}
                 - {property: "images", template: "images.html.twig", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
 
@@ -73,7 +71,7 @@ easy_admin:
                 - {type: "group", label: "Details", css_class: "col-lg-5"}
                 - {property: "category", label: "Categorie", type: "easyadmin_autocomplete"}
 #                - {property: "price",  type: "collection", type_options: { entry_type: 'App\Form\PriceType', by_reference: false }, label: "Pris"}
-                - {property: "price",  label: "Prijs"}
+#                - {property: "price",  label: "Prijs"}
                 - {type: "group", label: "Upload afbeeldingen", css_class: "col-lg-5" }
                 - {property: "images", type: "collection", type_options: {entry_type: 'App\Form\ImagesType', by_reference: false}, label: "Afbeeldingen" }
             list:
@@ -115,9 +113,7 @@ easy_admin:
 #                - {type: "group", label: "Informatie", css_class: "col-lg-7"}
                 - {property: "name", label: "Naam"}
                 - {property: "description", type: "raw", label: "Omschrijving"}
-                - {property: "createdAt", label: "Gecreëerd"}
-                - {property: "updatedAt", label: "Geüpdatet"}
-#                - {type: "group", label: "Afbeelding", css_class: "col-lg-5"}
+                - {property: "product", label: "Producten"}
                 - {property: "img", type: "image", base_path: "%uploads_categories_path%", label: "Afbeelding"}
 
         Images:
@@ -135,7 +131,7 @@ easy_admin:
           show:
             help:
             fields:
-              - {property: "imageAlt", label: "Name"}
+              - {property: "imageAlt", label: "Titel"}
               - {property: "image", type: "image", base_path: "%uploads_products_path%", label: "Afbeelding"}
               - {property: "product", label: "Product"}
 
@@ -145,7 +141,7 @@ easy_admin:
           class: App\Entity\Orders
           label: "Bestellingen"
 
-          help: "Bekijk en verwijder bestellingen."
+          help: "Bekijk bestellingen."
           disabled_actions: ["new","edit", 'delete']
           list:
             fields:
@@ -153,6 +149,13 @@ easy_admin:
               - {property: "date", label: "Geplaatst"}
               - {property: "orderDetails", label: "Details"}
               - {property: "user", label: "Gebruiker"}
+          show:
+            fields:
+              - {property: "id", label: "Bestellingsnummer"}
+              - {property: "date", label: "Geplaatst"}
+              - {property: "orderDetails", label: "Details"}
+              - {property: "user", label: "Klant"}
+
 
 
         User:
@@ -179,8 +182,7 @@ easy_admin:
                 - {property: "phone", label: "Telefoon", type: "tel"}
                 - {property: "address", label: "Adres"}
                 - {property: "postalCode", type_options: {disabled: true}, label: "Stad"}
-                - {property: "createdAt", label: "Gecreëerd"}
-                - {property: "updatedAt", label: "Geüpdatet"}
+                - {property: "orders", label: "Bestellingsnummers van de klant"}
         Price:
           class: App\Entity\Price
           label: "Prijzen"
@@ -188,18 +190,18 @@ easy_admin:
           list:
             fields:
               - id
-              - {property: "price", label: "Prijs"}
-              - {property: "tax", label: "Btw"}
-              - {property: "startDate", label: "Begin datum"}
-              - {property: "endDate", label: "Eind datum"}
+              - {property: "price", label: "Prijs(€) zonder btw"}
+              - {property: "tax", label: "Btw(%)"}
+              - {property: "startDate", label: "Begindatum"}
+              - {property: "endDate", label: "Einddatum"}
               - {property: "product", label: "Product"}
           show:
             help:
             fields:
-              - {property: "price", label: "Prijs"}
-              - {property: "tax", label: "Btw"}
-              - {property: "startDate", label: "Begin datum"}
-              - {property: "endDate", label: "Eind datum"}
+              - {property: "price", label: "Prijs(€) zonder btw"}
+              - {property: "tax", label: "Btw(%)"}
+              - {property: "startDate", label: "Begindatum"}
+              - {property: "endDate", label: "Einddatum"}
               - {property: "product", label: "Product"}
           form:
             title: "Prijs toevoegen"

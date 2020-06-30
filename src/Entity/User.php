@@ -311,6 +311,6 @@ class User implements UserInterface
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->getFirstName();
+        return "#".$this-> getId() .": " . $this->getFirstName() ." " . $this->getLastName();
     }
 }

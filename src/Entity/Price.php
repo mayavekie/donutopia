@@ -8,12 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get"={"path"="/price/{id}"}},
- *     normalizationContext={"groups"={"price:read"}},
- *     denormalizationContext={"groups"={"price:write"}}
- * )
  * @ORM\Entity(repositoryClass=PriceRepository::class)
  */
 class Price
@@ -27,32 +21,32 @@ class Price
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"product:read", "product:write", "price:read"})
+     * @Groups({"product:read", "product:write"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"price:read", "product:read", "product:write"})
+     * @Groups({"product:read", "product:write"})
      */
     private $tax;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"price:read",  "product:read", "product:write"})
+     * @Groups({"product:read", "product:write"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"price:read", "product:read", "product:write"})
+     * @Groups({"product:read", "product:write"})
      */
     private $endDate;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="price")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"price:read", "product:read", "product:write"})
+     * @Groups({"product:read", "product:write"})
      */
     private $product;
 
@@ -90,6 +84,14 @@ class Price
         $this->tax = $tax;
 
         return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPriceTax(): ?float {
+        $btw = $this->price * ($this->tax / 100);
+        return $this->price + $btw;
     }
 
     public function getStartDate(): ?\DateTimeInterface
@@ -130,6 +132,6 @@ class Price
 
     public function __toString()
     {
-            return (string)"Prijs: €". $this->getPrice() . " , Btw: " . $this->getTax()  ."%" ;
+            return (string)"Prijs: €". $this->getPrice() . " , Btw: " . $this->getTax()  ."%, Totaalprijs: €" . $this->getPriceTax() ;
         }
 }

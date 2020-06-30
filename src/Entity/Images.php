@@ -9,12 +9,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get"={"path"="/image/{id}"}},
- *     normalizationContext={"groups"={"images:read"}},
- *     denormalizationContext={"groups"={"images:write"}}
- * )
  * @ORM\Entity(repositoryClass=ImagesRepository::class)
  * @Vich\Uploadable()
  */
@@ -41,7 +35,6 @@ class Images
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"images:read"})
      */
     private $product;
 
@@ -53,7 +46,7 @@ class Images
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"images:read", "images:write", "product:read", "product:write"})
+     * @Groups({"product:read", "product:write"})
      */
     private $imageAlt;
 
